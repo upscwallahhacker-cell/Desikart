@@ -4,6 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>DeshiKart</title>
+    
+    <!-- Global Error Handler to catch white screen issues -->
+    <script>
+      window.addEventListener('error', function(event) {
+        // Ignore resize errors which are common and harmless
+        if (event.message === 'ResizeObserver loop limit exceeded') return;
+        
+        const root = document.getElementById('root');
+        if (root && root.innerHTML.trim() === '') {
+           document.body.innerHTML = `
+             <div style="padding: 20px; color: #7f1d1d; background: #fef2f2; font-family: sans-serif;">
+               <h3 style="margin-top: 0;">Application Error</h3>
+               <p>The app failed to start.</p>
+               <pre style="background: #fff; padding: 10px; overflow: auto; border-radius: 4px; border: 1px solid #fee2e2;">${event.message}</pre>
+               <p style="font-size: 12px; margin-top: 10px;">Check your internet connection and reload.</p>
+             </div>
+           `;
+        }
+        console.error("Global error caught:", event.error);
+      });
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
@@ -43,10 +65,13 @@
   <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "react/": "https://esm.sh/react@^19.2.3/",
-    "react": "https://esm.sh/react@^19.2.3"
+    "react": "https://esm.sh/react@18.2.0",
+    "react/": "https://esm.sh/react@18.2.0/",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-dom/": "https://esm.sh/react-dom@18.2.0/",
+    "lucide-react": "https://esm.sh/lucide-react@0.344.0",
+    "firebase/": "https://esm.sh/firebase@^12.7.0/"
   }
 }
 </script>

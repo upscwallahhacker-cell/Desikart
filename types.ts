@@ -23,6 +23,7 @@ export interface Product {
   desc: string;
   cod: boolean;
   inStock: boolean;
+  returnPeriod?: number; // Days for return policy
 }
 
 export interface CartItem extends Product {
@@ -30,11 +31,14 @@ export interface CartItem extends Product {
 }
 
 export enum OrderStatus {
-  PENDING = 'Pending',
+  PENDING = 'Order Placed',
   CONFIRMED = 'Confirmed',
   SHIPPED = 'Shipped',
   DELIVERED = 'Delivered',
-  CANCELLED = 'Cancelled'
+  CANCELLED = 'Cancelled',
+  RETURN_REQUESTED = 'Return Requested', // Refunds Pending
+  RETURNED = 'Returned',
+  REFUNDED = 'Refunded' // Refunds Complete
 }
 
 export interface Order {
@@ -47,9 +51,12 @@ export interface Order {
   status: OrderStatus;
   paymentMethod: 'COD' | 'ONLINE';
   utr?: string;
+  refundUpi?: string; // New field for Refund UPI
   timestamp: number;
   address_details: string;
   phone: string;
+  expectedDeliveryDate?: number; // Admin can update this
+  deliveredAt?: number; // To calculate return window
 }
 
 export interface AppSettings {
@@ -60,4 +67,10 @@ export interface AppSettings {
   };
   banners: string[];
   categories: string[];
+  social_links?: {
+    youtube: string;
+    instagram: string;
+  };
+  privacyPolicy?: string; // Dynamic Policy
+  refundPolicy?: string;  // Dynamic Policy
 }
